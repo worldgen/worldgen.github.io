@@ -284,8 +284,8 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Base iframe URL:', baseUrl);
         
         const iframeSources = {
-            'indoor-thumb': 'http://worldgen.github.io/viser-client/?playbackPath=http://worldgen.github.io/assets/viser_recordings/indoor.viser&initialCameraPosition=-0.150,-0.300,0.05&initialCameraLookAt=0.000,0.000,0.000&initialCameraUp=-0.000,-0.000,1.000',
-            'outdoor-thumb': 'http://worldgen.github.io/viser-client/?playbackPath=http:/worldgen.github.io/assets/viser_recordings/outdoor.viser&initialCameraPosition=0.8,-0.556,0&initialCameraLookAt=-1,0,0'
+            'indoor-thumb': 'https://worldgen.github.io/viser-client/?playbackPath=https://worldgen.github.io/assets/viser_recordings/indoor.viser&initialCameraPosition=-0.150,-0.300,0.05&initialCameraLookAt=0.000,0.000,0.000&initialCameraUp=-0.000,-0.000,1.000',
+            'outdoor-thumb': 'https://worldgen.github.io/viser-client/?playbackPath=https://worldgen.github.io/assets/viser_recordings/outdoor.viser&initialCameraPosition=0.8,-0.556,0&initialCameraLookAt=-1,0,0'
         };
         
         console.log('Iframe sources:', iframeSources);
