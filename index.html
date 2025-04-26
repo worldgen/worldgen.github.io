@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorldGen - Generate Any 3D Scene in Seconds</title>
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <meta name="description" content="Create stunning 3D worlds from text prompts and image inputs with WorldGen, a state-of-the-art 3D generation tool">
+    
+    <!-- Google Fonts: Lexend and Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'lexend': ['Lexend', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="worldgen.css">
+    
+    <!-- Custom JavaScript -->
+    <script src="worldgen.js" defer></script>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <div class="logo-container">
+                    <img src="https://github.com/ZiYang-xie/WorldGen/blob/main/assets/logo.png?raw=true" alt="WorldGen Logo" class="mx-auto">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6 font-lexend leading-tight text-center max-w-6xl mx-auto">
+                        Generate Any <span class="text-indigo-600">3D Scene</span> in Seconds
+                    </h1>
+                </div>
+                <p class="text-lg text-gray-600 max-w-xl mx-auto mb-2 text-center">
+                    WorldGen is a model that can generate interactive 3D scenes from text and image inputs in seconds.
+                </p>
+                <div class="author-info mb-8 text-center">
+                    <a href="https://ziyangxie.site/" class="author-name">Ziyang Xie</a>
+                    <a href="https://manifold-s.com/" target="_blank" rel="noopener noreferrer" class="institute hover:text-indigo-600 transition-colors">Manifolds AI</a>
+                </div>
+                
+                <div class="action-buttons">
+                    <a href="https://github.com/ZiYang-xie/WorldGen" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        </svg>
+                        Code
+                    </a>
+                    <a href="#" class="btn btn-secondary disabled-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                        Report
+                    </a>
+                    <a href="#" class="btn btn-secondary disabled-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        Demo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Features Section -->
+    <section id="features">
+        <div class="container">
+            <h2 class="section-title">Key Features</h2>
+            <p class="section-subtitle">Discover what makes WorldGen a powerful tool for 3D content generation</p>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feature-icon">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Instant 3D Generation</h3>
+                    <p class="feature-description">Generate detailed 3D scenes in seconds with a simple text prompt.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feature-icon">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Text and Image to 3D Scene</h3>
+                    <p class="feature-description">Support text and image inputs for flexible scene generation.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feature-icon">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">360° Free Exploration</h3>
+                    <p class="feature-description">WorldGen supports free 360° consistent exploration of the generated scene with loop closure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo">
+        <div class="container max-w-screen-xl mx-auto px-4">
+            <h2 class="section-title">See WorldGen in Action</h2>
+            <p class="section-subtitle">Explore examples of 3D scenes generated from text and images</p>
+            
+            <!-- Toggle Buttons -->
+            <div class="tab-buttons" role="tablist" aria-label="Demo Types">
+                <button class="tab-button active" role="tab" aria-selected="true" aria-controls="text-to-3d" onclick="showDemoTab('text-to-3d')">
+                    <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="4 17 10 11 4 5"></polyline>
+                        <line x1="12" y1="19" x2="20" y2="19"></line>
+                    </svg>
+                    Text-to-Scene
+                </button>
+                <button class="tab-button" role="tab" aria-selected="false" aria-controls="image-to-3d" onclick="showDemoTab('image-to-3d')">
+                    <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                    Image-to-Scene
+                </button>
+                <div class="tab-slider"></div>
+            </div>
+
+            <!-- Demo Content Panes -->
+            <div class="demo-content">
+                <!-- Text-to-3D Demos -->
+                <div id="text-to-3d" class="demo-content-tab active" role="tabpanel" aria-labelledby="tab-text-to-3d">
+                    <div class="gallery-container relative px-10">
+                        <button class="gallery-arrow prev absolute top-1/2 left-0 transform -translate-y-1/2 -translate-x-full z-10 bg-white/50 hover:bg-white/80 rounded-full p-2 shadow-md disabled:opacity-50" data-target="text-gallery-grid" aria-label="Previous Demo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </button>
+                        <div class="gallery-scroller overflow-hidden">
+                            <div id="text-gallery-grid" class="demo-grid flex flex-nowrap gap-6 transition-transform duration-300 ease-in-out">
+                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                    <video muted autoplay loop style="background-color: #f3f4f6;">
+                                        <source src="./assets/text2scene/indoor.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p>Prompt: "A modern well-designed neat living room, high quality, photorealistic"</p>
+                                </div>
+                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                    <video muted autoplay loop style="background-color: #f3f4f6;">
+                                        <source src="./assets/text2scene/underwater_castle.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p>Prompt: "An underwater city with glowing coral and ancient ruins, stylized cartoon"</p>
+                                </div>
+                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                    <video muted autoplay loop style="background-color: #f3f4f6;">
+                                        <source src="./assets/text2scene/factory.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p>Prompt: "A broken-down factory with rusty pipes, graffiti on the walls"</p>
+                                </div>
+                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                    <video muted autoplay loop style="background-color: #f3f4f6;">
+                                        <source src="./assets/text2scene/underwater.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p>Prompt: "A vibrant coral reef teeming with life"</p>
+                                </div>
+                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                    <video autoplay muted loop style="background-color: #f3f4f6;">
+                                        <source src="./assets/text2scene/castle.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p>Prompt: "A medieval castle on a hill during sunset"</p>
+                                </div>
+                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                    <video muted autoplay loop style="background-color: #f3f4f6;">
+                                        <source src="./assets/text2scene/mars.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p>Prompt: "The surface of the mars, rocky terrain with red sand, photorealistic"</p>
+                                </div>
+                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                    <video muted autoplay loop style="background-color: #f3f4f6;">
+                                        <source src="./assets/text2scene/cybercity.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p>Prompt: "A neon-lit cyberpunk street with rain reflections"</p>
+                                </div>
+                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                    <video muted autoplay loop style="background-color: #f3f4f6;">
+                                        <source src="./assets/text2scene/minecraft.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p>Prompt: "A Minecraft style room with chests and torches"</p>
+                                </div>
+                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                    <video muted autoplay loop style="background-color: #f3f4f6;">
+                                        <source src="./assets/text2scene/mountain_range.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p>Prompt: "A majestic mountain range at sunset, photorealistic"</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="gallery-arrow next absolute top-1/2 right-0 transform -translate-y-1/2 translate-x-full z-10 bg-white/50 hover:bg-white/80 rounded-full p-2 shadow-md disabled:opacity-50" data-target="text-gallery-grid" aria-label="Next Demo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Image-to-3D Demos -->
+                <div id="image-to-3d" class="demo-content-tab" role="tabpanel" aria-labelledby="tab-image-to-3d">
+                    <div class="gallery-container relative px-10">
+                        <button class="gallery-arrow prev absolute top-1/2 left-0 transform -translate-y-1/2 -translate-x-full z-10 bg-white/50 hover:bg-white/80 rounded-full p-2 shadow-md disabled:opacity-50" data-target="image-gallery-grid" aria-label="Previous Demo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </button>
+                        <div class="gallery-scroller overflow-hidden">
+                            <div id="image-gallery-grid" class="demo-grid flex flex-nowrap gap-6 transition-transform duration-300 ease-in-out">
+                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                    <img src="./assets/img2scene/game.jpg" alt="Input Image: Game Scene" class="w-full rounded-lg shadow-md mb-2 object-cover aspect-video">
+                                    <p class="mt-2">↓</p>
+                                    <video muted autoplay loop style="background-color: #f3f4f6;" class="w-full rounded-lg shadow-md">
+                                        <source src="./assets/img2scene/game.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p class="mt-2">prompt: "A styled game scene with forest and mountains, high quality, UE5"</p>
+                                </div>
+                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                    <img src="./assets/img2scene/indoor.jpg" alt="Input Image: Indoor Room" class="w-full rounded-lg shadow-md mb-2 object-cover aspect-video">
+                                    <p class="mt-2">↓</p>
+                                    <video muted autoplay loop style="background-color: #f3f4f6;" class="w-full rounded-lg shadow-md">
+                                        <source src="./assets/img2scene/indoor.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p class="mt-2">prompt: "A photorealistic cozy well-designed indoor room"</p>
+                                </div>
+                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                    <img src="./assets/img2scene/painting_town.jpg" alt="Input Image: Street View" class="w-full rounded-lg shadow-md mb-2 object-cover aspect-video">
+                                    <p class="mt-2">↓</p>
+                                    <video muted autoplay loop style="background-color: #f3f4f6;" class="w-full rounded-lg shadow-md">
+                                        <source src="./assets/img2scene/painting_town.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p class="mt-2">prompt: "A peaceful old-town street bathed in soft sunlight, with stone houses and rustic wooden shutters.."</p>
+                                </div>
+                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                    <img src="./assets/img2scene/street_view.jpg" alt="Input Image: Street View" class="w-full rounded-lg shadow-md mb-2 object-cover aspect-video">
+                                    <p class="mt-2">↓</p>
+                                    <video muted autoplay loop style="background-color: #f3f4f6;" class="w-full rounded-lg shadow-md">
+                                        <source src="./assets/img2scene/street_view.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p class="mt-2">prompt: "A street view captured by a canon camera on newyork street, photorealistic."</p>
+                                </div>
+                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                    <img src="./assets/img2scene/spaceship.jpg" alt="Input Image: Street View" class="w-full rounded-lg shadow-md mb-2 object-cover aspect-video">
+                                    <p class="mt-2">↓</p>
+                                    <video muted autoplay loop style="background-color: #f3f4f6;" class="w-full rounded-lg shadow-md">
+                                        <source src="./assets/img2scene/spaceship.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p class="mt-2">prompt: "A sleek, metallic corridor inside a futuristic spaceship, ambient lighting."</p>
+                                </div>
+                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                    <img src="./assets/img2scene/painting.png" alt="Input Image: Painting" class="w-full rounded-lg shadow-md mb-2 object-cover aspect-video">
+                                    <p class="mt-2">↓</p>
+                                    <video muted autoplay loop style="background-color: #f3f4f6;" class="w-full rounded-lg shadow-md">
+                                        <source src="./assets/img2scene/painting.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p class="mt-2">prompt: "A beautiful scenary, a house on the flower field, painting style"</p>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <button class="gallery-arrow next absolute top-1/2 right-0 transform -translate-y-1/2 translate-x-full z-10 bg-white/50 hover:bg-white/80 rounded-full p-2 shadow-md disabled:opacity-50" data-target="image-gallery-grid" aria-label="Next Demo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-16">
+        <div class="container max-w-screen-xl mx-auto px-4">
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">Learn about the technology behind WorldGen's 3D scene generation.<br> No buzzwords, No flashy names, just clear explanation.</p>
+            <!-- Add more detailed explanation or diagram here later -->
+            <div class="mt-14 space-y-8">
+                <div class="mb-4">
+                    <h3 class="text-xl font-semibold mb-3 font-lexend text-gray-800">Stage 1: Panorama Generation</h3>
+                    <p class="text-gray-600 max-w-2xl">
+                        First, we generate a high-resolution, 360-degree panorama image based on the input text prompt or image. This panorama captures the overall scene layout and appearance.
+                    </p>
+                    <div class="rounded-lg mt-2 bg-grid-pattern border border-slate-200/50 mx-auto mask-fade-edges">
+                        <img src="./assets/method/stage1_pipeline.png" alt="Stage 1 Pipeline Diagram" class="rounded-md w-full block px-4">
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-3 font-lexend text-gray-800">Stage 2: Pano-to-Scene Conversion</h3>
+                    <p class="text-gray-600 max-w-3xl">
+                        Next, the generated panorama is converted into a full 3D scene. This involves converting panorama image into 3DGS or mesh representations, allowing for interactive exploration and consistent views from any angle.
+                    </p>
+                    <div class="rounded-lg mt-2 bg-grid-pattern border border-slate-200/50 mx-auto mask-fade-edges">
+                        <img src="./assets/method/stage2_pipeline.png" alt="Stage 2 Pipeline Diagram" class="rounded-md w-full block px-4">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <!-- Interactive Demo Section -->
+     <section id="interactive-demo" class="py-4">
+        <div class="container max-w-screen-xl mx-auto px-4">
+            <h2 class="section-title">Interactive Demo</h2>
+            <p class="section-subtitle">Experience WorldGen's generated scenes yourself</p>
+            
+            <div class="px-16">
+                <div id="iframe-container" class="iframe-container">
+                    <iframe
+                        id="indoor"
+                        class="iframe"
+                        title="WorldGen 3D Scene"
+                        loading="lazy"
+                    >
+                    </iframe>
+                </div>
+                <div style="position: relative; display: flex; justify-content: center;">
+                    <div class="results-slide-row" id="results-objs-scroll">
+                        <div data-img-src="./assets/viser_recordings/thumbnails/indoor.png" data-id="indoor-thumb" data-label="Indoor"></div>
+                        <div data-img-src="./assets/viser_recordings/thumbnails/outdoor.png" data-id="outdoor-thumb" data-label="Outdoor"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clear separator -->
+    <div style="height: 2rem; clear: both;"></div>
+
+    <!-- Try It Now Section -->
+    <section id="try-now" class="py-24">
+        <div class="container max-w-screen-md mx-auto px-4 text-center">
+            <h2 class="section-title">Ready to Build Your World?</h2>
+            <p class="section-subtitle !mb-10">
+                Dive into the code, explore the possibilities, and start generating your own 3D scenes. <br>Visit the GitHub repository to get started.
+            </p>
+            <a href="https://github.com/ZiYang-xie/WorldGen" class="btn btn-primary text-lg px-8 py-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github">
+                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                </svg>
+                Try it Now
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4">
+        <div class="container mx-auto px-4">
+            <div class="footer-links flex justify-center items-center space-x-3 mb-2">
+                <a href="mailto:ziyangxie01@gmail.com" class="footer-link flex items-center text-gray-600 hover:text-indigo-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                   Contact Author
+               </a>
+            </div>
+            <div class="copyright text-center text-gray-500 text-sm">
+                &copy; 2025 WorldGen - All Rights Reserved
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
