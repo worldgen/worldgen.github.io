@@ -111,17 +111,29 @@ function setupGallery(galleryContainer) {
     const items = scrollGrid.querySelectorAll('.demo-item');
     
     if (!scrollGrid || !prevButton || !nextButton || items.length === 0) {
-        // console.warn('Gallery setup incomplete for container:', galleryContainer);
-        // Clean up listeners if setup fails halfway?
         return; 
     }
     
     const itemCount = items.length;
-    const itemsVisible = 3; 
+    let itemsVisible = getVisibleItemCount(); // Dynamically determine visible items
     const itemWidth = items[0].offsetWidth; 
     const gap = parseInt(window.getComputedStyle(scrollGrid).gap) || 24; 
     const scrollAmount = itemWidth + gap;
     let currentIndex = 0; // Default index
+
+    // Function to determine number of visible items based on screen width
+    function getVisibleItemCount() {
+        const screenWidth = window.innerWidth;
+        if (screenWidth < 640) { // Small mobile
+            return 1;
+        } else if (screenWidth < 768) { // Mobile
+            return 1;
+        } else if (screenWidth < 1024) { // Tablet
+            return 2;
+        } else {
+            return 3; // Desktop
+        }
+    }
 
     // --- Calculate current index based on existing transform --- 
     if (scrollAmount > 0) { // Prevent division by zero if width calculation failed
@@ -131,19 +143,17 @@ function setupGallery(galleryContainer) {
             const currentTranslateX = parseFloat(match[1]);
             // Calculate index based on scroll amount, rounding to nearest index
             currentIndex = Math.round(Math.abs(currentTranslateX) / scrollAmount);
-            // console.log(`Restored index for ${scrollGrid.id}: ${currentIndex} from ${currentTranslateX}px`);
         }
     } else {
         console.warn('Scroll amount calculation failed for gallery', scrollGrid.id);
     }
-    // --- End of index calculation --- 
     
     // Ensure calculated index is within bounds
     currentIndex = Math.max(0, Math.min(currentIndex, itemCount - itemsVisible));
     // Apply the potentially corrected transform immediately in case rounding changed it
     scrollGrid.style.transform = `translateX(-${currentIndex * scrollAmount}px)`;
 
-    // --- Clear previous auto-scroll and hover listeners if re-initializing ---
+    // --- Clear previous listeners if re-initializing ---
     if (galleryContainer._autoScrollIntervalId) {
         clearInterval(galleryContainer._autoScrollIntervalId);
     }
@@ -152,6 +162,34 @@ function setupGallery(galleryContainer) {
     }
     if (galleryContainer._mouseLeaveListener) {
         galleryContainer.removeEventListener('mouseleave', galleryContainer._mouseLeaveListener);
+    }
+    if (galleryContainer._resizeListener) {
+        window.removeEventListener('resize', galleryContainer._resizeListener);
+    }
+    
+    // Remove touch event listeners if they exist
+    if (scrollGrid._touchContainer) {
+        const touchContainer = scrollGrid._touchContainer;
+        if (scrollGrid._touchStartListener) {
+            touchContainer.removeEventListener('touchstart', scrollGrid._touchStartListener);
+        }
+        if (scrollGrid._touchMoveListener) {
+            touchContainer.removeEventListener('touchmove', scrollGrid._touchMoveListener);
+        }
+        if (scrollGrid._touchEndListener) {
+            touchContainer.removeEventListener('touchend', scrollGrid._touchEndListener);
+        }
+        if (scrollGrid._touchCancelListener) {
+            touchContainer.removeEventListener('touchcancel', scrollGrid._touchCancelListener);
+        }
+        
+        // Also cleanup item touch listeners if needed
+        const items = scrollGrid.querySelectorAll('.demo-item');
+        if (items.length > 0 && scrollGrid._touchStartListener) {
+            items.forEach(item => {
+                item.removeEventListener('touchstart', scrollGrid._touchStartListener);
+            });
+        }
     }
     // --- End cleanup ---
 
@@ -167,7 +205,19 @@ function setupGallery(galleryContainer) {
     function updateArrows() {
         prevButton.disabled = currentIndex === 0;
         nextButton.disabled = currentIndex >= itemCount - itemsVisible;
-        // console.log(`Arrows Updated: Current Index: ${currentIndex}, Item Count: ${itemCount}, Prev Disabled: ${prevButton.disabled}, Next Disabled: ${nextButton.disabled}`);
+        
+        // Update visibility classes for mobile
+        if (prevButton.disabled) {
+            prevButton.classList.add('hidden-arrow');
+        } else {
+            prevButton.classList.remove('hidden-arrow');
+        }
+        
+        if (nextButton.disabled) {
+            nextButton.classList.add('hidden-arrow');
+        } else {
+            nextButton.classList.remove('hidden-arrow');
+        }
     }
     
     // --- Remove potential old listeners before adding new ones --- 
@@ -178,9 +228,36 @@ function setupGallery(galleryContainer) {
     if (oldNextListener) nextButton.removeEventListener('click', oldNextListener);
     // --- End listener removal ---
 
+    // Function to move to specific index with optional animation
+    function moveToIndex(index, animate = true) {
+        // Ensure index is within bounds
+        index = Math.max(0, Math.min(index, itemCount - itemsVisible));
+        
+        // Update current index
+        currentIndex = index;
+        
+        // Apply transform with or without animation
+        if (!animate) {
+            scrollGrid.style.transition = 'none';
+            requestAnimationFrame(() => {
+                scrollGrid.style.transform = `translateX(-${currentIndex * scrollAmount}px)`;
+                requestAnimationFrame(() => {
+                    scrollGrid.style.transition = ''; // Restore transition
+                });
+            });
+        } else {
+            scrollGrid.style.transform = `translateX(-${currentIndex * scrollAmount}px)`;
+        }
+        
+        // Update arrow states
+        updateArrows();
+    }
+
     const prevListener = () => {
         if (currentIndex > 0) {
-            currentIndex = Math.max(0, currentIndex - itemsVisible); 
+            // On mobile, scroll one at a time
+            const scrollBy = window.innerWidth < 768 ? 1 : itemsVisible;
+            currentIndex = Math.max(0, currentIndex - scrollBy); 
             scrollGrid.style.transform = `translateX(-${currentIndex * scrollAmount}px)`;
             updateArrows();
         }
@@ -190,13 +267,200 @@ function setupGallery(galleryContainer) {
     
     const nextListener = () => {
         if (currentIndex < itemCount - itemsVisible) {
-            currentIndex = Math.min(itemCount - itemsVisible, currentIndex + itemsVisible); // Ensure not exceeding max
+            // On mobile, scroll one at a time
+            const scrollBy = window.innerWidth < 768 ? 1 : itemsVisible;
+            currentIndex = Math.min(itemCount - itemsVisible, currentIndex + scrollBy); 
             scrollGrid.style.transform = `translateX(-${currentIndex * scrollAmount}px)`;
             updateArrows();
         }
     };
     nextButton.addEventListener('click', nextListener);
     nextButton._clickListener = nextListener; // Store listener reference
+    
+    // --- Touch Dragging Implementation ---
+    let touchStartX = 0;
+    let touchCurrentX = 0;
+    let isDragging = false;
+    let startTranslateX = 0;
+    let lastTranslateX = 0;
+    
+    // Get the container element for touch events - using the scroller instead of grid
+    const touchContainer = galleryContainer.querySelector('.gallery-scroller');
+    
+    // Make sure video elements don't capture touch events
+    items.forEach(item => {
+        const video = item.querySelector('video');
+        if (video) {
+            video.style.pointerEvents = 'none';
+        }
+        // Also make images non-interactive to touch
+        const img = item.querySelector('img');
+        if (img) {
+            img.style.pointerEvents = 'none';
+        }
+    });
+    
+    // Touch start handler
+    const touchStartListener = (e) => {
+        console.log('Touch start detected');
+        
+        // Check if already dragging
+        if (isDragging) {
+            // If we're somehow still in a dragging state from a previous interaction,
+            // force cleanup to allow a new drag to start
+            scrollGrid.classList.remove('is-dragging');
+            scrollGrid.style.transition = '';
+        }
+        
+        // Start a new drag operation
+        isDragging = true;
+        
+        // Prevent autoscroll during touch interaction
+        stopAutoScroll();
+        
+        // Record starting position
+        touchStartX = e.touches[0].clientX;
+        touchCurrentX = touchStartX;
+        
+        // Get current transform
+        const currentTransform = scrollGrid.style.transform;
+        const match = currentTransform.match(/translateX\(-?([\d.]+)px\)/);
+        startTranslateX = match ? parseFloat(match[1]) : currentIndex * scrollAmount;
+        lastTranslateX = startTranslateX;
+        
+        // Add dragging class for visual feedback
+        scrollGrid.classList.add('is-dragging');
+        
+        // Disable transitions while dragging
+        scrollGrid.style.transition = 'none';
+    };
+    
+    // Touch move handler
+    const touchMoveListener = (e) => {
+        if (!isDragging) return;
+        
+        // Prevent scrolling the page
+        e.preventDefault();
+        
+        // Update current position
+        touchCurrentX = e.touches[0].clientX;
+        
+        // Calculate drag distance
+        const dragDelta = touchStartX - touchCurrentX;
+        
+        // Apply transform with drag offset
+        const newTranslateX = startTranslateX + dragDelta;
+        
+        // Limit overscroll (allows some elasticity)
+        let limitedTranslateX = newTranslateX;
+        
+        // Apply some resistance when trying to scroll beyond limits
+        if (newTranslateX < 0) {
+            limitedTranslateX = newTranslateX * 0.3; // More resistance when pull from left
+        } else if (newTranslateX > (itemCount - itemsVisible) * scrollAmount) {
+            const overscroll = newTranslateX - (itemCount - itemsVisible) * scrollAmount;
+            limitedTranslateX = (itemCount - itemsVisible) * scrollAmount + overscroll * 0.3;
+        }
+        
+        // Apply transform
+        scrollGrid.style.transform = `translateX(-${limitedTranslateX}px)`;
+        lastTranslateX = limitedTranslateX;
+    };
+    
+    // Touch end handler
+    const touchEndListener = (e) => {
+        if (!isDragging) return;
+        
+        console.log('Touch end detected');
+        
+        // Remove dragging class
+        scrollGrid.classList.remove('is-dragging');
+        
+        // Restore transitions
+        scrollGrid.style.transition = '';
+        
+        // Calculate drag distance and velocity
+        const totalDragDistance = touchStartX - touchCurrentX;
+        const dragPercent = Math.abs(totalDragDistance) / itemWidth;
+        
+        // Calculate target index based on drag direction and amount
+        let targetIndex = currentIndex;
+        
+        // Threshold for moving to next/prev (30% of item width)
+        const moveThreshold = 0.3;
+        
+        if (dragPercent > moveThreshold) {
+            if (totalDragDistance > 0) {
+                // Dragged left → move right/next
+                targetIndex = Math.min(itemCount - itemsVisible, currentIndex + 1);
+            } else {
+                // Dragged right → move left/prev
+                targetIndex = Math.max(0, currentIndex - 1);
+            }
+        }
+        
+        // Move to the calculated target index
+        moveToIndex(targetIndex);
+        
+        // Completely reset touch state to ensure clean state for next drag
+        touchStartX = 0;
+        touchCurrentX = 0;
+        startTranslateX = 0;
+        lastTranslateX = 0;
+        isDragging = false;
+        
+        // Restart auto-scroll after a small delay
+        setTimeout(startAutoScroll, 100);
+    };
+    
+    // If touches are canceled or interrupted, make sure we reset everything
+    const touchCancelListener = () => {
+        console.log('Touch canceled');
+        // Clean up state
+        isDragging = false;
+        scrollGrid.classList.remove('is-dragging');
+        scrollGrid.style.transition = '';
+        
+        // Restart autoscroll
+        startAutoScroll();
+    };
+    
+    // Add touch event listeners to the touch container (scroller) instead of the grid
+    touchContainer.addEventListener('touchstart', touchStartListener, { passive: true });
+    touchContainer.addEventListener('touchmove', touchMoveListener, { passive: false });
+    touchContainer.addEventListener('touchend', touchEndListener);
+    touchContainer.addEventListener('touchcancel', touchCancelListener);
+    
+    // Also add touch listeners directly to each demo item to ensure they're draggable
+    items.forEach(item => {
+        item.addEventListener('touchstart', touchStartListener, { passive: true });
+        // We don't need to add all listeners to each item, just the touchstart to initiate the drag
+    });
+    
+    // Store listeners for cleanup
+    scrollGrid._touchContainer = touchContainer;
+    scrollGrid._touchStartListener = touchStartListener;
+    scrollGrid._touchMoveListener = touchMoveListener;
+    scrollGrid._touchEndListener = touchEndListener;
+    scrollGrid._touchCancelListener = touchCancelListener;
+    // --- End Touch Dragging Implementation ---
+    
+    // Handle window resize
+    const resizeListener = () => {
+        // Update visible items count
+        itemsVisible = getVisibleItemCount();
+        
+        // Make sure current index is still valid
+        currentIndex = Math.min(currentIndex, itemCount - itemsVisible);
+        if (currentIndex < 0) currentIndex = 0;
+        
+        // Update transform and arrows
+        scrollGrid.style.transform = `translateX(-${currentIndex * scrollAmount}px)`;
+        updateArrows();
+    };
+    
+    window.addEventListener('resize', resizeListener);
+    galleryContainer._resizeListener = resizeListener;
     
     // --- Auto-scrolling logic --- 
     let autoScrollIntervalId = null;
@@ -244,6 +508,9 @@ function setupGallery(galleryContainer) {
 
     // Initial arrow state based on potentially restored index
     updateArrows();
+    
+    // Run initial resize to set correct values
+    resizeListener();
 }
 
 // Add animations and enhancements when page loads

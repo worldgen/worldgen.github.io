@@ -150,7 +150,7 @@
             <p class="section-subtitle">Explore examples of 3D scenes generated from text and images</p>
             
             <!-- Toggle Buttons -->
-            <div class="tab-buttons" role="tablist" aria-label="Demo Types">
+            <div class="tab-buttons flex flex-wrap justify-center" role="tablist" aria-label="Demo Types">
                 <button class="tab-button active" role="tab" aria-selected="true" aria-controls="text-to-3d" onclick="showDemoTab('text-to-3d')">
                     <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="4 17 10 11 4 5"></polyline>
@@ -173,69 +173,69 @@
             <div class="demo-content">
                 <!-- Text-to-3D Demos -->
                 <div id="text-to-3d" class="demo-content-tab active" role="tabpanel" aria-labelledby="tab-text-to-3d">
-                    <div class="gallery-container relative px-10">
-                        <button class="gallery-arrow prev absolute top-1/2 left-0 transform -translate-y-1/2 -translate-x-full z-10 bg-white/50 hover:bg-white/80 rounded-full p-2 shadow-md disabled:opacity-50" data-target="text-gallery-grid" aria-label="Previous Demo">
+                    <div class="gallery-container relative px-4 sm:px-10">
+                        <button class="gallery-arrow prev absolute top-1/2 left-1 sm:left-0 transform -translate-y-1/2 sm:-translate-x-full z-10 bg-white/50 hover:bg-white/80 rounded-full p-2 shadow-md disabled:opacity-50" data-target="text-gallery-grid" aria-label="Previous Demo">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
                         </button>
                         <div class="gallery-scroller overflow-hidden">
                             <div id="text-gallery-grid" class="demo-grid flex flex-nowrap gap-6 transition-transform duration-300 ease-in-out">
-                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                <div class="demo-item flex-shrink-0 w-full md:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-2*1.5rem)/3)]">
                                     <video muted autoplay loop style="background-color: #f3f4f6;">
                                         <source src="./assets/text2scene/indoor.mp4" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
                                     <p>Prompt: "A modern well-designed neat living room, high quality, photorealistic"</p>
                                 </div>
-                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                <div class="demo-item flex-shrink-0 w-full md:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-2*1.5rem)/3)]">
                                     <video muted autoplay loop style="background-color: #f3f4f6;">
                                         <source src="./assets/text2scene/underwater_castle.mp4" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
                                     <p>Prompt: "An underwater city with glowing coral and ancient ruins, stylized cartoon"</p>
                                 </div>
-                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                <div class="demo-item flex-shrink-0 w-full md:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-2*1.5rem)/3)]">
                                     <video muted autoplay loop style="background-color: #f3f4f6;">
                                         <source src="./assets/text2scene/factory.mp4" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
                                     <p>Prompt: "A broken-down factory with rusty pipes, graffiti on the walls"</p>
                                 </div>
-                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                <div class="demo-item flex-shrink-0 w-full md:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-2*1.5rem)/3)]">
                                     <video muted autoplay loop style="background-color: #f3f4f6;">
                                         <source src="./assets/text2scene/underwater.mp4" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
                                     <p>Prompt: "A vibrant coral reef teeming with life"</p>
                                 </div>
-                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                <div class="demo-item flex-shrink-0 w-full md:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-2*1.5rem)/3)]">
                                     <video autoplay muted loop style="background-color: #f3f4f6;">
                                         <source src="./assets/text2scene/castle.mp4" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
                                     <p>Prompt: "A medieval castle on a hill during sunset"</p>
                                 </div>
-                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                <div class="demo-item flex-shrink-0 w-full md:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-2*1.5rem)/3)]">
                                     <video muted autoplay loop style="background-color: #f3f4f6;">
                                         <source src="./assets/text2scene/mars.mp4" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
                                     <p>Prompt: "The surface of the mars, rocky terrain with red sand, photorealistic"</p>
                                 </div>
-                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                <div class="demo-item flex-shrink-0 w-full md:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-2*1.5rem)/3)]">
                                     <video muted autoplay loop style="background-color: #f3f4f6;">
                                         <source src="./assets/text2scene/cybercity.mp4" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
                                     <p>Prompt: "A neon-lit cyberpunk street with rain reflections"</p>
                                 </div>
-                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                <div class="demo-item flex-shrink-0 w-full md:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-2*1.5rem)/3)]">
                                     <video muted autoplay loop style="background-color: #f3f4f6;">
                                         <source src="./assets/text2scene/minecraft.mp4" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
                                     <p>Prompt: "A Minecraft style room with chests and torches"</p>
                                 </div>
-                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                <div class="demo-item flex-shrink-0 w-full md:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-2*1.5rem)/3)]">
                                     <video muted autoplay loop style="background-color: #f3f4f6;">
                                         <source src="./assets/text2scene/mountain_range.mp4" type="video/mp4">
                                         Your browser does not support the video tag.
@@ -244,7 +244,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="gallery-arrow next absolute top-1/2 right-0 transform -translate-y-1/2 translate-x-full z-10 bg-white/50 hover:bg-white/80 rounded-full p-2 shadow-md disabled:opacity-50" data-target="text-gallery-grid" aria-label="Next Demo">
+                        <button class="gallery-arrow next absolute top-1/2 right-1 sm:right-0 transform -translate-y-1/2 sm:translate-x-full z-10 bg-white/50 hover:bg-white/80 rounded-full p-2 shadow-md disabled:opacity-50" data-target="text-gallery-grid" aria-label="Next Demo">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </button>
                     </div>
@@ -252,13 +252,13 @@
 
                 <!-- Image-to-3D Demos -->
                 <div id="image-to-3d" class="demo-content-tab" role="tabpanel" aria-labelledby="tab-image-to-3d">
-                    <div class="gallery-container relative px-10">
-                        <button class="gallery-arrow prev absolute top-1/2 left-0 transform -translate-y-1/2 -translate-x-full z-10 bg-white/50 hover:bg-white/80 rounded-full p-2 shadow-md disabled:opacity-50" data-target="image-gallery-grid" aria-label="Previous Demo">
+                    <div class="gallery-container relative px-4 sm:px-10">
+                        <button class="gallery-arrow prev absolute top-1/2 left-1 sm:left-0 transform -translate-y-1/2 sm:-translate-x-full z-10 bg-white/50 hover:bg-white/80 rounded-full p-2 shadow-md disabled:opacity-50" data-target="image-gallery-grid" aria-label="Previous Demo">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
                         </button>
                         <div class="gallery-scroller overflow-hidden">
                             <div id="image-gallery-grid" class="demo-grid flex flex-nowrap gap-6 transition-transform duration-300 ease-in-out">
-                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                <div class="demo-item flex-shrink-0 w-full md:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-2*1.5rem)/3)]">
                                     <img src="./assets/img2scene/game.jpg" alt="Input Image: Game Scene" class="w-full rounded-lg shadow-md mb-2 object-cover aspect-video">
                                     <p class="mt-2">↓</p>
                                     <video muted autoplay loop style="background-color: #f3f4f6;" class="w-full rounded-lg shadow-md">
@@ -267,7 +267,7 @@
                                     </video>
                                     <p class="mt-2">prompt: "A styled game scene with forest and mountains, high quality, UE5"</p>
                                 </div>
-                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                <div class="demo-item flex-shrink-0 w-full md:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-2*1.5rem)/3)]">
                                     <img src="./assets/img2scene/indoor.jpg" alt="Input Image: Indoor Room" class="w-full rounded-lg shadow-md mb-2 object-cover aspect-video">
                                     <p class="mt-2">↓</p>
                                     <video muted autoplay loop style="background-color: #f3f4f6;" class="w-full rounded-lg shadow-md">
@@ -276,7 +276,7 @@
                                     </video>
                                     <p class="mt-2">prompt: "A photorealistic cozy well-designed indoor room"</p>
                                 </div>
-                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                <div class="demo-item flex-shrink-0 w-full md:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-2*1.5rem)/3)]">
                                     <img src="./assets/img2scene/painting_town.jpg" alt="Input Image: Street View" class="w-full rounded-lg shadow-md mb-2 object-cover aspect-video">
                                     <p class="mt-2">↓</p>
                                     <video muted autoplay loop style="background-color: #f3f4f6;" class="w-full rounded-lg shadow-md">
@@ -285,7 +285,7 @@
                                     </video>
                                     <p class="mt-2">prompt: "A peaceful old-town street bathed in soft sunlight, with stone houses and rustic wooden shutters.."</p>
                                 </div>
-                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                <div class="demo-item flex-shrink-0 w-full md:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-2*1.5rem)/3)]">
                                     <img src="./assets/img2scene/street_view.jpg" alt="Input Image: Street View" class="w-full rounded-lg shadow-md mb-2 object-cover aspect-video">
                                     <p class="mt-2">↓</p>
                                     <video muted autoplay loop style="background-color: #f3f4f6;" class="w-full rounded-lg shadow-md">
@@ -294,7 +294,7 @@
                                     </video>
                                     <p class="mt-2">prompt: "A street view captured by a canon camera on newyork street, photorealistic."</p>
                                 </div>
-                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                <div class="demo-item flex-shrink-0 w-full md:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-2*1.5rem)/3)]">
                                     <img src="./assets/img2scene/spaceship.jpg" alt="Input Image: Street View" class="w-full rounded-lg shadow-md mb-2 object-cover aspect-video">
                                     <p class="mt-2">↓</p>
                                     <video muted autoplay loop style="background-color: #f3f4f6;" class="w-full rounded-lg shadow-md">
@@ -303,7 +303,7 @@
                                     </video>
                                     <p class="mt-2">prompt: "A sleek, metallic corridor inside a futuristic spaceship, ambient lighting."</p>
                                 </div>
-                                <div class="demo-item flex-shrink-0 w-[calc((100%-2*1.5rem)/3)]">
+                                <div class="demo-item flex-shrink-0 w-full md:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-2*1.5rem)/3)]">
                                     <img src="./assets/img2scene/painting.png" alt="Input Image: Painting" class="w-full rounded-lg shadow-md mb-2 object-cover aspect-video">
                                     <p class="mt-2">↓</p>
                                     <video muted autoplay loop style="background-color: #f3f4f6;" class="w-full rounded-lg shadow-md">
@@ -315,7 +315,7 @@
                                 
                             </div>
                         </div>
-                        <button class="gallery-arrow next absolute top-1/2 right-0 transform -translate-y-1/2 translate-x-full z-10 bg-white/50 hover:bg-white/80 rounded-full p-2 shadow-md disabled:opacity-50" data-target="image-gallery-grid" aria-label="Next Demo">
+                        <button class="gallery-arrow next absolute top-1/2 right-1 sm:right-0 transform -translate-y-1/2 sm:translate-x-full z-10 bg-white/50 hover:bg-white/80 rounded-full p-2 shadow-md disabled:opacity-50" data-target="image-gallery-grid" aria-label="Next Demo">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </button>
                     </div>
@@ -372,8 +372,8 @@
                 </div>
                 <div style="position: relative; display: flex; justify-content: center;">
                     <div class="results-slide-row" id="results-objs-scroll">
-                        <div data-img-src="./assets/viser_recordings/thumbnails/indoor.png" data-id="indoor-thumb" data-label="Indoor"></div>
-                        <div data-img-src="./assets/viser_recordings/thumbnails/outdoor.png" data-id="outdoor-thumb" data-label="Outdoor"></div>
+                        <div data-img-src="./assets/viser_recordings/thumbnails/indoor.jpg" data-id="indoor-thumb" data-label="Indoor"></div>
+                        <div data-img-src="./assets/viser_recordings/thumbnails/outdoor.jpg" data-id="outdoor-thumb" data-label="Outdoor"></div>
                     </div>
                 </div>
             </div>
